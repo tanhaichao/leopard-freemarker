@@ -27,6 +27,7 @@ public abstract class AbstractTemplateView {
 	private String templateName;
 	protected Map<String, Object> model = new LinkedHashMap<String, Object>();
 
+	
 	public AbstractTemplateView(String folder, String templateName) {
 		this.folder = folder;
 		this.templateName = templateName;
@@ -36,6 +37,7 @@ public abstract class AbstractTemplateView {
 		model.put(attributeName, attributeValue);
 		return this;
 	}
+	
 
 	public void render(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		RequestHolder.setRequest(request);
