@@ -22,6 +22,7 @@ import io.leopard.web.freemarker.TemplateVariable;
 
 public abstract class AbstractTemplateView {
 
+	
 	private String folder;
 	private String templateName;
 	protected Map<String, Object> model = new LinkedHashMap<String, Object>();
