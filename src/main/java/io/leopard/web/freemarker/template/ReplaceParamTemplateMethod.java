@@ -22,7 +22,7 @@ public class ReplaceParamTemplateMethod implements TemplateMethodModelEx, Templa
 
 	private static final Pattern pattern = Pattern.compile("([a-zA-Z0-9_]+)=([a-zA-Z0-9_\\.:/]+)");
 
-	public static String replaceParam(String param, HttpServletRequest request) {
+	public String replaceParam(String param, HttpServletRequest request) {
 		// String queryString = request.getQueryString();
 		// if (StringUtils.isEmpty(queryString)) {
 		// return "?" + param;
