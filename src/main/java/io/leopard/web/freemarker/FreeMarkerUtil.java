@@ -12,6 +12,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfig;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import freemarker.template.TemplateException;
+import io.leopard.web.freemarker.template.ReplaceParamTemplateMethod;
 
 public class FreeMarkerUtil {
 
@@ -36,7 +37,7 @@ public class FreeMarkerUtil {
 	protected static FreeMarkerConfigurer getFreeMarkerConfigurer(ApplicationContext applicationContext) {
 		Map<String, Object> freemarkerVariables = new HashMap<String, Object>();
 		freemarkerVariables.put("xml_escape", "fmXmlEscape");
-		freemarkerVariables.put("replaceParam", new ReplaceParamMethod());
+		freemarkerVariables.put("replaceParam", new ReplaceParamTemplateMethod());
 		freemarkerVariables.putAll(listTemplateMethod(applicationContext));
 
 		Properties freemarkerSettings = new Properties();

@@ -1,4 +1,4 @@
-package io.leopard.web.freemarker;
+package io.leopard.web.freemarker.template;
 
 import java.util.Enumeration;
 import java.util.List;
@@ -7,24 +7,17 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
+import freemarker.template.TemplateMethodModelEx;
 import freemarker.template.TemplateModelException;
+import io.leopard.web.freemarker.TemplateVariable;
 
-public class ReplaceParamMethod implements TemplateMethod {
-
-	@Override
-	public String getKey() {
-		return "replaceParam";
-	}
+public class ReplaceParamTemplateMethod implements TemplateMethodModelEx, TemplateVariable {
 
 	@Override
 	public Object exec(@SuppressWarnings("rawtypes") List args) throws TemplateModelException {
 		String param = args.get(0).toString();
-		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-		// HttpServletRequest request = RequestUtil.getCurrentRequest();
-		return replaceParam(param, request);
+		HttpServletRequest request = RequestHolder.getRequest();
+		return this.replaceParam(param, request);
 	}
 
 	private static final Pattern pattern = Pattern.compile("([a-zA-Z0-9_]+)=([a-zA-Z0-9_\\.:/]+)");
@@ -73,4 +66,8 @@ public class ReplaceParamMethod implements TemplateMethod {
 		return "?" + sb.toString();
 	}
 
+	@Override
+	public String getKey() {
+		return "replaceParam";
+	}
 }
