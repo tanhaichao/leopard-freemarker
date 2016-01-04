@@ -2,13 +2,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.leopard</groupId>
 	<artifactId>leopard-freemarker</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1-SNAPSHOT</version>
 
 
 	<parent>
 		<groupId>io.leopard.depend</groupId>
 		<artifactId>depend</artifactId>
-		<version>0.0.11</version>
+		<version>0.0.15</version>
 	</parent>
 
 	<scm>
