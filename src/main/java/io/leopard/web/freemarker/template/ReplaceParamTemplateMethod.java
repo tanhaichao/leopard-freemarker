@@ -17,12 +17,12 @@ public class ReplaceParamTemplateMethod implements TemplateMethodModelEx, Templa
 	public Object exec(@SuppressWarnings("rawtypes") List args) throws TemplateModelException {
 		String param = args.get(0).toString();
 		HttpServletRequest request = RequestHolder.getRequest();
-		return this.replaceParam(param, request);
+		return replaceParam(param, request);
 	}
 
 	private static final Pattern pattern = Pattern.compile("([a-zA-Z0-9_]+)=([a-zA-Z0-9_\\.:/]+)");
 
-	public String replaceParam(String param, HttpServletRequest request) {
+	public static String replaceParam(String param, HttpServletRequest request) {
 		// String queryString = request.getQueryString();
 		// if (StringUtils.isEmpty(queryString)) {
 		// return "?" + param;
