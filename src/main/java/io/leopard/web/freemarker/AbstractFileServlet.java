@@ -79,7 +79,7 @@ public abstract class AbstractFileServlet extends HttpServlet {
 		return output.toByteArray();
 	}
 
-	private static Pattern FILENAME_PATTERN = Pattern.compile("^[a-zA-Z0-9\\-_/\\.]+\\.(css|jpg|png|js)$");
+	private static Pattern FILENAME_PATTERN = Pattern.compile("^[a-zA-Z0-9\\-_/\\.]+\\.(css|jpg|png|js|eot)$");
 
 	/**
 	 * 文件名称合法性判断.
