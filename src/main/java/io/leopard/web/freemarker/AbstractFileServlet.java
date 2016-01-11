@@ -110,6 +110,8 @@ public abstract class AbstractFileServlet extends HttpServlet {
 		}
 		else if (filename.endsWith(".js")) {
 			return "application/javascript";
+		}else if (filename.endsWith(".eot")) {
+			return "application/javascript";
 		}
 		throw new IllegalArgumentException("未知文件类型[" + filename + "].");
 	}
