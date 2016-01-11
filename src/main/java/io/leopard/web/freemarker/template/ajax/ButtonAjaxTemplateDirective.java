@@ -23,9 +23,10 @@ public class ButtonAjaxTemplateDirective implements TemplateDirectiveModel, Temp
 	@Override
 	public void execute(Environment env, @SuppressWarnings("rawtypes") Map params, TemplateModel[] loopVars, TemplateDirectiveBody body) throws TemplateException, IOException {
 		String value = ((SimpleScalar) params.get("value")).getAsString();
-		String processing = ((SimpleScalar) params.get("processing")).getAsString();
+		// String processing = ((SimpleScalar) params.get("processing")).getAsString();
+		String url = ((SimpleScalar) params.get("url")).getAsString();
 		StringBuilder sb = new StringBuilder();
-		sb.append("<input type='button' value='" + value + "' onclick=\"this.value='" + processing + "'\"/>");
+		sb.append("<input type='button' value='" + value + "' onclick=\"request('" + url + "')\"/>");
 		env.getOut().write(sb.toString());
 	}
 
