@@ -1,5 +1,6 @@
 package io.leopard.web.freemarker.template;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import freemarker.ext.beans.StringModel;
 import freemarker.template.SimpleDate;
 import freemarker.template.SimpleNumber;
 import freemarker.template.SimpleScalar;
+import freemarker.template.TemplateException;
 import freemarker.template.TemplateMethodModelEx;
 import freemarker.template.TemplateModelException;
 import io.leopard.web.freemarker.TemplateVariable;
@@ -55,6 +57,6 @@ public abstract class AbstractTemplateMethod implements TemplateMethodModelEx, T
 		}
 	}
 
-	public abstract Object exec(HttpServletRequest request, Object... args) throws TemplateModelException;
+	public abstract Object exec(HttpServletRequest request, Object... args) throws TemplateModelException, TemplateException, IOException;
 
 }

@@ -22,12 +22,10 @@ import io.leopard.web.freemarker.TemplateVariable;
 
 public abstract class AbstractTemplateView {
 
-	
 	private String folder;
 	private String templateName;
 	protected Map<String, Object> model = new LinkedHashMap<String, Object>();
 
-	
 	public AbstractTemplateView(String folder, String templateName) {
 		this.folder = folder;
 		this.templateName = templateName;
@@ -37,12 +35,12 @@ public abstract class AbstractTemplateView {
 		model.put(attributeName, attributeValue);
 		return this;
 	}
-	
 
 	public void render(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		RequestHolder.setRequest(request);
-
 		Configuration config = new Configuration();
+
+		ConfigurationHolder.setConfiguration(config);
 		// 设置要解析的模板所在的目录，并加载模板文件
 		// config.setDirectoryForTemplateLoading(templateFile);
 		config.setTemplateLoader(new ClassTemplateLoader(this.getClass(), folder));
