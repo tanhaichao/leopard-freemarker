@@ -31,7 +31,7 @@ public abstract class AbstractHttpServlet extends HttpServlet {
 		}
 		String name = servlet.name();
 		String uri = StringUtils.arrayToDelimitedString(servlet.urlPatterns(), ",");
-		System.err.println("WebServlet name:" + name + " uri:" + uri + " class:" + clazz.getName());
+		System.err.println("WebServlet name:" + name + "\turi:" + uri + "\tclass:" + clazz.getName());
 	}
 
 	@Override
