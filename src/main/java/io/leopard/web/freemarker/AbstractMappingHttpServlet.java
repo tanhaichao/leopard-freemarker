@@ -90,6 +90,9 @@ public abstract class AbstractMappingHttpServlet extends AbstractHttpServlet {
 		if (String.class.equals(type)) {
 			return value;
 		}
+		else if (boolean.class.equals(type) || Boolean.class.equals(type)) {
+			return Boolean.parseBoolean(value);
+		}
 		else if (int.class.equals(type) || Integer.class.equals(type)) {
 			return Integer.parseInt(value);
 		}
