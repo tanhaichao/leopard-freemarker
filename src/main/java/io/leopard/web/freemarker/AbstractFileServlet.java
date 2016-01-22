@@ -36,9 +36,10 @@ public abstract class AbstractFileServlet extends HttpServlet {
 		String contentType = parseContentType(filename);
 		InputStream input = getRealAsInputStream(request, filename);
 		if (input == null) {
-			input = AbstractFileServlet.class.getResourceAsStream(getHtdocsPath() + filename);
+			String filename2 = getHtdocsPath() + filename;
+			input = AbstractFileServlet.class.getResourceAsStream(filename2);
 			if (input == null) {
-				throw new NullPointerException("文件[" + filename + "]不存在.");
+				throw new NullPointerException("文件[" + filename2 + "]不存在.");
 			}
 		}
 
@@ -110,7 +111,8 @@ public abstract class AbstractFileServlet extends HttpServlet {
 		}
 		else if (filename.endsWith(".js")) {
 			return "application/javascript";
-		}else if (filename.endsWith(".eot")) {
+		}
+		else if (filename.endsWith(".eot")) {
 			return "application/javascript";
 		}
 		throw new IllegalArgumentException("未知文件类型[" + filename + "].");
