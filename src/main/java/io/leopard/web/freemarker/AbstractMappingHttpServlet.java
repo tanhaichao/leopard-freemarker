@@ -1,14 +1,18 @@
 package io.leopard.web.freemarker;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+import java.io.OutputStream;
 import java.lang.reflect.Method;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.util.StringUtils;
+
+import io.leopard.json.Json;
 
 public abstract class AbstractMappingHttpServlet extends AbstractHttpServlet {
 
@@ -36,20 +40,43 @@ public abstract class AbstractMappingHttpServlet extends AbstractHttpServlet {
 		if (methods == null) {
 			return;
 		}
+		String json = null;
 		for (Method method : methods) {
 			if (method.getName().equals(methodName)) {
-				try {
-					method.invoke(this, request, response);
-				}
-				catch (IllegalAccessException e) {
-					throw new RuntimeException(e.getMessage(), e);
-				}
-				catch (InvocationTargetException e) {
-					throw new RuntimeException(e.getMessage(), e);
-				}
+				json = this.doMethod(method, request, response);
 				break;
 			}
 		}
+		if (json == null) {
+			return;
+		}
+
+		byte[] bytes = json.getBytes();
+		response.setContentType("text/plain; charset=UTF-8");
+		response.setContentLength(bytes.length);
+
+		// response.setDateHeader("Expires", System.currentTimeMillis() + 1000 * 3600 * 24);
+		// Flush byte array to servlet output stream.
+		OutputStream out = response.getOutputStream();
+		out.write(bytes);
+		out.flush();
+	}
+
+	protected String doMethod(Method method, HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		Object[] args = new Object[0];
+		try {
+			Object data = method.invoke(this, args);
+			map.put("status", "success");
+			map.put("data", data);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			map.put("status", e.getClass().getSimpleName());
+			map.put("data", e.getMessage());
+		}
+		String json = Json.toFormatJson(map);
+		return json;
 	}
 
 }
