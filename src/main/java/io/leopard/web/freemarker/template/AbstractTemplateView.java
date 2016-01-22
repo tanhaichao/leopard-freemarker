@@ -81,6 +81,8 @@ public abstract class AbstractTemplateView {
 		// 否则会出现乱码
 		Template template = config.getTemplate(templateName + ".ftl", Locale.CHINA, "UTF-8");
 		template.setCustomAttribute("request", request);
+		model.put("request", request);
+
 		// Template tmp = (getEncoding() != null ? conf.getTemplate(name,
 		// locale, getEncoding()) : conf.getTemplate(name, locale));
 
