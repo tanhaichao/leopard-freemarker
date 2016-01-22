@@ -4,13 +4,31 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.util.StringUtils;
+
 public abstract class AbstractHttpServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+
+	public AbstractHttpServlet() {
+		printServletInfo();
+	}
+
+	protected void printServletInfo() {
+		Class<?> clazz = this.getClass();
+		WebServlet servlet = clazz.getAnnotation(WebServlet.class);
+		if (servlet == null) {
+			return;
+		}
+		String name = servlet.name();
+		String uri = StringUtils.arrayToDelimitedString(servlet.urlPatterns(), ",");
+		System.err.println("WebServlet name:" + name + " uri:" + uri + " class:" + clazz.getName());
+	}
 
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
