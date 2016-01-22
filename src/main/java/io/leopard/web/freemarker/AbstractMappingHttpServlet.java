@@ -63,6 +63,7 @@ public abstract class AbstractMappingHttpServlet extends AbstractHttpServlet {
 	}
 
 	protected String doMethod(Method method, HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("doMethod url:" + request.getRequestURL().toString());
 		String[] names = CtClassUtil.getParameterNames(method);
 		Class<?>[] types = method.getParameterTypes();
 		Object[] args = new Object[names.length];
