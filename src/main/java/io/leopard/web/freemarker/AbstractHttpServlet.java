@@ -9,9 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.util.StringUtils;
 
 public abstract class AbstractHttpServlet extends HttpServlet {
+
+	protected Log logger = LogFactory.getLog(this.getClass());
 
 	private static final long serialVersionUID = 1L;
 
