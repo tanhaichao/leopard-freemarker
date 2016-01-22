@@ -63,8 +63,14 @@ public abstract class AbstractMappingHttpServlet extends AbstractHttpServlet {
 	}
 
 	protected String doMethod(Method method, HttpServletRequest request, HttpServletResponse response) {
+		String[] names = CtClassUtil.getParameterNames(method);
+		Class<?>[] types = method.getParameterTypes();
+		Object[] args = new Object[names.length];
+		for (int i = 0; i < names.length; i++) {
+			args[i] = this.getParameter(request, names[i], types[i]);
+		}
+
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
-		Object[] args = new Object[0];
 		try {
 			Object data = method.invoke(this, args);
 			map.put("status", "success");
@@ -77,6 +83,20 @@ public abstract class AbstractMappingHttpServlet extends AbstractHttpServlet {
 		}
 		String json = Json.toFormatJson(map);
 		return json;
+	}
+
+	protected Object getParameter(HttpServletRequest request, String name, Class<?> type) {
+		String value = request.getParameter(name);
+		if (String.class.equals(type)) {
+			return value;
+		}
+		else if (int.class.equals(type) || Integer.class.equals(type)) {
+			return Integer.parseInt(value);
+		}
+		else if (long.class.equals(type) || Long.class.equals(type)) {
+			return Integer.parseInt(value);
+		}
+		throw new IllegalArgumentException("未知数据类型[" + type.getName() + "].");
 	}
 
 }
