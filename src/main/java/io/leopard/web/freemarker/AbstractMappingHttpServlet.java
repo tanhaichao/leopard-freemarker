@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.util.StringUtils;
 
 import io.leopard.json.Json;
+import io.leopard.web.freemarker.js.NgController;
 
 public abstract class AbstractMappingHttpServlet extends AbstractHttpServlet {
 
@@ -71,6 +72,13 @@ public abstract class AbstractMappingHttpServlet extends AbstractHttpServlet {
 			args[i] = this.getParameter(request, names[i], types[i]);
 		}
 
+		NgController anno = method.getAnnotation(NgController.class);
+		if (anno != null) {
+			String javascript = this.doNgController(method, args);
+			System.out.println("ng javascript:" + javascript);
+			return javascript;
+		}
+
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
 		try {
 			Object data = method.invoke(this, args);
@@ -84,6 +92,25 @@ public abstract class AbstractMappingHttpServlet extends AbstractHttpServlet {
 		}
 		String json = Json.toFormatJson(map);
 		return json;
+	}
+
+	protected String doNgController(Method method, Object[] args) {
+		Object data;
+		try {
+			data = method.invoke(this, args);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+		String methodName = method.getName();
+		String json = Json.toFormatJson(data);
+		StringBuilder sb = new StringBuilder();
+		sb.append("function " + methodName + "Ctrl($scope) {\n");
+		sb.append("$scope.logs =");
+		sb.append(json);
+		sb.append(";}");
+		return sb.toString();
 	}
 
 	protected Object getParameter(HttpServletRequest request, String name, Class<?> type) {

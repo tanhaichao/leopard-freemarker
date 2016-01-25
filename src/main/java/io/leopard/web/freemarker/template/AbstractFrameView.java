@@ -7,6 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 
 public abstract class AbstractFrameView extends AbstractTemplateView {
 
+	public AbstractFrameView(String folder, String templateName) {
+		super(folder, templateName);
+	}
+
 	public AbstractFrameView(String folder, String frameName, String templateName) {
 		super(folder, frameName);
 		this.addObject("template_folder", folder);
