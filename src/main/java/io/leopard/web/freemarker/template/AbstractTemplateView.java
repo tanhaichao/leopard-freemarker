@@ -1,6 +1,7 @@
 package io.leopard.web.freemarker.template;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -87,13 +88,20 @@ public abstract class AbstractTemplateView {
 		// locale, getEncoding()) : conf.getTemplate(name, locale));
 
 		response.setContentType("text/html; charset=UTF-8");
-		Writer out = response.getWriter();
+
+		StringWriter writer = new StringWriter();
+		// Writer out = response.getWriter();
 		try {
-			template.process(model, out);
+			template.process(model, writer);
 		}
 		catch (TemplateException e) {
 			throw new IOException(e);
 		}
+		String html = writer.toString();
+		html = html.replace("# {{", "#{{");// 兼容AngularJS
+
+		Writer out = response.getWriter();
+		out.write(html);
 		out.flush();
 		out.close();
 	}
