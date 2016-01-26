@@ -122,10 +122,20 @@ public abstract class AbstractMappingHttpServlet extends AbstractHttpServlet {
 			return Boolean.parseBoolean(value);
 		}
 		else if (int.class.equals(type) || Integer.class.equals(type)) {
-			return Integer.parseInt(value);
+			try {
+				return Integer.parseInt(value);
+			}
+			catch (NumberFormatException e) {
+				return 0;
+			}
 		}
 		else if (long.class.equals(type) || Long.class.equals(type)) {
-			return Integer.parseInt(value);
+			try {
+				return Long.parseLong(value);
+			}
+			catch (NumberFormatException e) {
+				return 0L;
+			}
 		}
 		throw new IllegalArgumentException("未知数据类型[" + type.getName() + "].");
 	}
