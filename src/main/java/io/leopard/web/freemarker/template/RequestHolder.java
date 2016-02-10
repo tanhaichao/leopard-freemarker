@@ -15,7 +15,11 @@ public class RequestHolder {
 			return request;
 		}
 		// TODO ahai 这里改成可以不引入spring-context?
-		request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+		if (attributes == null) {
+			return null;
+		}
+		request = attributes.getRequest();
 		return request;
 	}
 
