@@ -18,7 +18,7 @@ public class TimeAgoTemplateMethod extends AbstractTemplateMethod {
 	@Override
 	public Object exec(HttpServletRequest request, Object... args) throws TemplateModelException {
 		Date time = (Date) args[0];
-		return "timeAgo";
+		return time.getTime();
 	}
 
 	@Override

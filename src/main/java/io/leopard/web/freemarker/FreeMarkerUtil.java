@@ -72,6 +72,7 @@ public class FreeMarkerUtil {
 			// System.err.println("key:" + method.getKey() + " method:" + method);
 			freemarkerVariables.put(variable.getKey(), variable);
 		}
+		freemarkerVariables.put("timeAgo", new TimeAgoTemplateMethod());
 		return freemarkerVariables;
 	}
 
