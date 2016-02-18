@@ -3,13 +3,16 @@
 	<groupId>io.leopard</groupId>
 	<artifactId>leopard-freemarker</artifactId>
 	<version>0.1-SNAPSHOT</version>
-
+	<name>Leopard-Freemarker</name>
+	<description>规范、简化Freemarker，自带常用自定义Freemarker指令、方法。</description>
 
 	<parent>
 		<groupId>io.leopard.depend</groupId>
 		<artifactId>depend</artifactId>
 		<version>0.0.15</version>
 	</parent>
+
+
 
 	<scm>
 		<url>https://github.com/tanhaichao/leopard-freemarker</url>
