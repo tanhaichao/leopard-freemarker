@@ -85,7 +85,7 @@ public abstract class AbstractFileServlet extends HttpServlet {
 		return output.toByteArray();
 	}
 
-	private static Pattern FILENAME_PATTERN = Pattern.compile("^[a-zA-Z0-9\\-_/\\.]+\\.(css|jpg|png|js|eot|html|json)$");
+	private static Pattern FILENAME_PATTERN = Pattern.compile("^[a-zA-Z0-9\\-_/\\.]+\\.(css|jpg|png|js|eot|html|json|woff|woff2)$");
 
 	/**
 	 * 文件名称合法性判断.
@@ -118,6 +118,12 @@ public abstract class AbstractFileServlet extends HttpServlet {
 			return "application/javascript";
 		}
 		else if (filename.endsWith(".eot")) {
+			return "application/javascript";
+		}
+		else if (filename.endsWith(".woff")) {
+			return "application/javascript";
+		}
+		else if (filename.endsWith(".woff2")) {
 			return "application/javascript";
 		}
 		else if (filename.endsWith(".json")) {
