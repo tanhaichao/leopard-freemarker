@@ -126,6 +126,12 @@ public abstract class AbstractFileServlet extends HttpServlet {
 		else if (filename.endsWith(".woff2")) {
 			return "application/javascript";
 		}
+		else if (filename.endsWith(".ttf")) {
+			return "application/javascript";
+		}
+		else if (filename.endsWith(".svg")) {
+			return "application/javascript";
+		}
 		else if (filename.endsWith(".json")) {
 			return "application/json";
 		}
