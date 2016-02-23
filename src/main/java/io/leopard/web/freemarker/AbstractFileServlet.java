@@ -29,6 +29,11 @@ public abstract class AbstractFileServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String filename = request.getParameter("f");
+
+		this.doFile(request, response, filename);
+	}
+
+	protected void doFile(HttpServletRequest request, HttpServletResponse response, String filename) throws ServletException, IOException {
 		if (!isValidFilename(filename)) {
 			throw new IllegalArgumentException("非法文件名[" + filename + "].");
 		}
