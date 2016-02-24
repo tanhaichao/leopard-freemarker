@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.SystemUtils;
+
 /**
  * 资源文件访问.
  * 
@@ -45,8 +47,13 @@ public abstract class AbstractFileServlet extends HttpServlet {
 		response.setContentType(contentType);
 		response.setContentLength(bytes.length);
 
-		// response.setDateHeader("Expires", System.currentTimeMillis() + 1000 * 3600 * 24);
-		response.setDateHeader("Expires", -1);
+		if (SystemUtils.IS_OS_WINDOWS) {
+			response.setDateHeader("Expires", -1);
+		}
+		else {
+			response.setDateHeader("Expires", System.currentTimeMillis() + 1000 * 3600 * 1);
+		}
+
 		OutputStream out = response.getOutputStream();
 		out.write(bytes);
 		out.flush();
