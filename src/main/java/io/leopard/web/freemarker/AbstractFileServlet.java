@@ -39,6 +39,19 @@ public abstract class AbstractFileServlet extends HttpServlet {
 		}
 
 		String contentType = parseContentType(filename);
+		InputStream input = readFile(request, filename);
+		byte[] bytes = toBytes(input);
+		input.close();
+		response.setContentType(contentType);
+		response.setContentLength(bytes.length);
+
+		response.setDateHeader("Expires", System.currentTimeMillis() + 1000 * 3600 * 24);
+		OutputStream out = response.getOutputStream();
+		out.write(bytes);
+		out.flush();
+	}
+
+	protected InputStream readFile(HttpServletRequest request, String filename) {
 		InputStream input = getRealAsInputStream(request, filename);
 		if (input == null) {
 			String filename2 = getHtdocsPath() + filename;
@@ -47,15 +60,8 @@ public abstract class AbstractFileServlet extends HttpServlet {
 				throw new NullPointerException("文件[" + filename2 + "]不存在.");
 			}
 		}
+		return input;
 
-		byte[] bytes = toBytes(input);
-		response.setContentType(contentType);
-		response.setContentLength(bytes.length);
-
-		response.setDateHeader("Expires", System.currentTimeMillis() + 1000 * 3600 * 24);
-		OutputStream out = response.getOutputStream();
-		out.write(bytes);
-		out.flush();
 	}
 
 	protected InputStream getRealAsInputStream(HttpServletRequest request, String filename) {
@@ -93,7 +99,7 @@ public abstract class AbstractFileServlet extends HttpServlet {
 	 * @param filename
 	 * @return
 	 */
-	protected static boolean isValidFilename(String filename) {
+	protected boolean isValidFilename(String filename) {
 		if (filename == null || filename.length() == 0) {
 			throw new NullPointerException("文件名不能为空.");
 		}
@@ -104,7 +110,7 @@ public abstract class AbstractFileServlet extends HttpServlet {
 		return m.matches();
 	}
 
-	protected static String parseContentType(String filename) {
+	protected String parseContentType(String filename) {
 		if (filename.endsWith(".css")) {
 			return "text/css";
 		}
