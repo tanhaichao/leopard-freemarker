@@ -45,7 +45,8 @@ public abstract class AbstractFileServlet extends HttpServlet {
 		response.setContentType(contentType);
 		response.setContentLength(bytes.length);
 
-		response.setDateHeader("Expires", System.currentTimeMillis() + 1000 * 3600 * 24);
+		// response.setDateHeader("Expires", System.currentTimeMillis() + 1000 * 3600 * 24);
+		response.setDateHeader("Expires", -1);
 		OutputStream out = response.getOutputStream();
 		out.write(bytes);
 		out.flush();
