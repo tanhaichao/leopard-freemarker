@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.SystemUtils;
 
 /**
@@ -31,7 +32,9 @@ public abstract class AbstractFileServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String filename = request.getParameter("f");
-
+		if (StringUtils.isEmpty(filename)) {
+			throw new IllegalArgumentException("文件名不能为空.");
+		}
 		this.doFile(request, response, filename);
 	}
 
