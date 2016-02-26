@@ -2,6 +2,7 @@ package io.leopard.web.freemarker;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -85,6 +86,12 @@ public abstract class AbstractMappingHttpServlet extends AbstractHttpServlet {
 			Object data = method.invoke(this, args);
 			map.put("status", "success");
 			map.put("data", data);
+		}
+		catch (InvocationTargetException t) {
+			Exception e = (Exception) t.getCause();
+			e.printStackTrace();
+			map.put("status", e.getClass().getSimpleName());
+			map.put("data", e.getMessage());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
