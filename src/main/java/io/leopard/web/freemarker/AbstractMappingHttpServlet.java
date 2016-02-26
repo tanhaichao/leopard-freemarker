@@ -16,6 +16,8 @@ import org.springframework.util.StringUtils;
 import io.leopard.autounit.CtClassUtil;
 import io.leopard.json.Json;
 import io.leopard.web.freemarker.js.NgController;
+import io.leopard.web.freemarker.xparam.XparamParser;
+import io.leopard.web.freemarker.xparam.XparamParserImpl;
 
 public abstract class AbstractMappingHttpServlet extends AbstractHttpServlet {
 
@@ -65,6 +67,8 @@ public abstract class AbstractMappingHttpServlet extends AbstractHttpServlet {
 		out.flush();
 	}
 
+	private static XparamParser xparamParser = new XparamParserImpl();
+
 	protected String doMethod(Method method, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("doMethod url:" + request.getRequestURL().toString());
 		String[] names = CtClassUtil.getParameterNames(method);
@@ -73,6 +77,8 @@ public abstract class AbstractMappingHttpServlet extends AbstractHttpServlet {
 		for (int i = 0; i < names.length; i++) {
 			args[i] = this.getParameter(request, names[i], types[i]);
 		}
+
+		xparamParser.parse(args, types, names, request);// xparma解析
 
 		NgController anno = method.getAnnotation(NgController.class);
 		if (anno != null) {
