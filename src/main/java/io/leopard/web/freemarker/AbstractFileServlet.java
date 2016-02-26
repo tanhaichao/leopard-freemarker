@@ -35,7 +35,7 @@ public abstract class AbstractFileServlet extends HttpServlet {
 		if (StringUtils.isEmpty(filename)) {
 			throw new IllegalArgumentException("文件名不能为空.");
 		}
-		this.doFile(request, response, filename);
+		doFile(request, response, filename);
 	}
 
 	protected void doFile(HttpServletRequest request, HttpServletResponse response, String filename) throws ServletException, IOException {
