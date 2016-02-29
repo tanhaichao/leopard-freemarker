@@ -50,16 +50,21 @@ public abstract class AbstractFileServlet extends HttpServlet {
 		response.setContentType(contentType);
 		response.setContentLength(bytes.length);
 
-		if (SystemUtils.IS_OS_WINDOWS) {
-			response.setDateHeader("Expires", -1);
-		}
-		else {
-			response.setDateHeader("Expires", System.currentTimeMillis() + 1000 * 3600 * 1);
-		}
+		long expires = this.getExpires(filename);
+		response.setDateHeader("Expires", expires);
 
 		OutputStream out = response.getOutputStream();
 		out.write(bytes);
 		out.flush();
+	}
+
+	protected long getExpires(String filename) {
+		if (SystemUtils.IS_OS_WINDOWS) {
+			return -1;
+		}
+		else {
+			return System.currentTimeMillis() + 1000 * 3600 * 1;
+		}
 	}
 
 	protected InputStream readFile(HttpServletRequest request, String filename) {
