@@ -11,6 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,7 +19,10 @@ import org.apache.commons.lang.SystemUtils;
 
 import io.leopard.web.freemarker.AbstractFileServlet;
 
-public abstract class ClassPathHtdocs implements IHtdocs {
+public abstract class ClassPathHtdocs extends HttpServlet implements IHtdocs {
+
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public void doFile(HttpServletRequest request, HttpServletResponse response, String filename) throws ServletException, IOException {
 		if (!isValidFilename(filename)) {
@@ -41,16 +45,6 @@ public abstract class ClassPathHtdocs implements IHtdocs {
 	}
 
 	@Override
-	public long getExpires(String filename) {
-		if (SystemUtils.IS_OS_WINDOWS) {
-			return -1;
-		}
-		else {
-			return System.currentTimeMillis() + 1000 * 3600 * 1;
-		}
-	}
-
-	@Override
 	public InputStream readFile(HttpServletRequest request, String filename) throws IOException {
 		InputStream input = getRealAsInputStream(request, filename);
 		if (input == null) {
@@ -61,7 +55,6 @@ public abstract class ClassPathHtdocs implements IHtdocs {
 			}
 		}
 		return input;
-
 	}
 
 	protected InputStream getRealAsInputStream(HttpServletRequest request, String filename) {
@@ -78,6 +71,16 @@ public abstract class ClassPathHtdocs implements IHtdocs {
 		}
 		catch (FileNotFoundException e) {
 			return null;
+		}
+	}
+
+	@Override
+	public Long getExpires(String filename) {
+		if (SystemUtils.IS_OS_WINDOWS) {
+			return -1L;
+		}
+		else {
+			return System.currentTimeMillis() + 1000 * 3600 * 1;
 		}
 	}
 
