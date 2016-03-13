@@ -18,6 +18,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import io.leopard.web.freemarker.template.BodyTemplateDirective;
 
 public class ClassPathModelAndView extends ModelAndView {
 
@@ -73,6 +74,7 @@ public class ClassPathModelAndView extends ModelAndView {
 		static {
 			Map<String, Object> freemarkerVariables = new HashMap<String, Object>();
 			freemarkerVariables.put("xml_escape", "fmXmlEscape");
+			freemarkerVariables.put("templateBody", new BodyTemplateDirective());
 
 			Properties freemarkerSettings = new Properties();
 			freemarkerSettings.put("template_update_delay", "1");
