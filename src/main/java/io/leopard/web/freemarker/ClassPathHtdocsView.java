@@ -19,9 +19,9 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
-public class ClassPathModelAndView extends ModelAndView {
+public class ClassPathHtdocsView extends ModelAndView {
 
-	public ClassPathModelAndView(String viewName) {
+	public ClassPathHtdocsView(String viewName) {
 		super(createView(viewName));
 	}
 
@@ -95,4 +95,5 @@ public class ClassPathModelAndView extends ModelAndView {
 		}
 
 	}
+
 }
