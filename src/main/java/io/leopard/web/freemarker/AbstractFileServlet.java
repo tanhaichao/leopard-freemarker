@@ -25,7 +25,7 @@ public abstract class AbstractFileServlet extends ClassPathHtdocs {
 		if (StringUtils.isEmpty(filename)) {
 			throw new IllegalArgumentException("文件名不能为空.");
 		}
-		super.doFile(request, response, filename);
+		this.doFile(request, response, filename);
 	}
 
 	// @Override
