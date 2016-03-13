@@ -75,7 +75,7 @@ public abstract class ClassPathHtdocs extends HttpServlet implements IHtdocs {
 	}
 
 	@Override
-	public Long getExpires(String filename) {
+	public long getExpires(String filename) {
 		if (SystemUtils.IS_OS_WINDOWS) {
 			return -1L;
 		}

@@ -13,7 +13,7 @@ public interface IHtdocs {
 
 	void doFile(HttpServletRequest request, HttpServletResponse response, String filename) throws ServletException, IOException;
 
-	Long getExpires(String filename);
+	long getExpires(String filename);
 
 	InputStream readFile(HttpServletRequest request, String filename) throws IOException;
 
