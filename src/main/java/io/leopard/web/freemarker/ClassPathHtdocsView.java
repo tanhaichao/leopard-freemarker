@@ -1,49 +1,49 @@
 package io.leopard.web.freemarker;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.Writer;
-import java.util.HashMap;
+import java.io.InputStream;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.core.io.DefaultResourceLoader;
-import org.springframework.ui.freemarker.SpringTemplateLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
+import io.leopard.web.freemarker.htdocs.ClassPathHtdocs;
 
 public class ClassPathHtdocsView extends ModelAndView {
 
-	public ClassPathHtdocsView(String viewName) {
-		super(createView(viewName));
+	public ClassPathHtdocsView(String folder) {
+		super(createView(folder));
 	}
 
-	protected static View createView(String viewName) {
-		FtlView view = new FtlView("htdocs", viewName);
+	protected static View createView(String folder) {
+		HtdocsView view = new HtdocsView(folder);
 		return view;
 	}
 
-	public static class FtlView implements View {
+	public static class HtdocsView extends ClassPathHtdocs implements View {
 
 		private String folder;
-		private String viewName;
 
-		public FtlView() {
+		private ResourceLoader resourceLoader = new DefaultResourceLoader();
+
+		@Override
+		public InputStream readFile(HttpServletRequest request, String filename) throws IOException {
+			String path = "/" + this.getHtdocsPath() + filename;
+			Resource resource = resourceLoader.getResource(path);
+			if (resource == null || !resource.exists()) {
+				throw new FileNotFoundException(path);
+			}
+			return resource.getInputStream();
 		}
 
-		public FtlView(String viewName) {
-			this("/", viewName);
-		}
-
-		public FtlView(String folder, String viewName) {
-			this.viewName = viewName;
+		public HtdocsView(String folder) {
 			this.folder = folder;
 		}
 
@@ -52,48 +52,16 @@ public class ClassPathHtdocsView extends ModelAndView {
 			return "text/html; charset=UTF-8";
 		}
 
-		protected Template getTemplate(String name) throws IOException {
-			Configuration config = configurer.getConfiguration();
-
-			// config.setTemplateLoader(new ClassTemplateLoader(this.getClass(), folder));
-			config.setTemplateLoader(new SpringTemplateLoader(new DefaultResourceLoader(), folder));
-			return config.getTemplate(name, "UTF-8");
+		@Override
+		public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+			String filename = request.getRequestURI();
+			this.doFile(request, response, filename);
 		}
 
 		@Override
-		public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-			Template template = this.getTemplate(viewName + ".ftl");
-			response.setContentType(getContentType());
-			Writer out = response.getWriter();
-			template.process(model, out);
-		}
-
-		private static FreeMarkerConfigurer configurer;
-
-		static {
-			Map<String, Object> freemarkerVariables = new HashMap<String, Object>();
-			freemarkerVariables.put("xml_escape", "fmXmlEscape");
-
-			Properties freemarkerSettings = new Properties();
-			freemarkerSettings.put("template_update_delay", "1");
-			freemarkerSettings.put("defaultEncoding", "UTF-8");
-
-			configurer = new FreeMarkerConfigurer();
-			configurer.setTemplateLoaderPath("/WEB-INF/ftl/");
-			configurer.setFreemarkerVariables(freemarkerVariables);
-			configurer.setFreemarkerSettings(freemarkerSettings);
-
-			try {
-				configurer.afterPropertiesSet();
-			}
-			catch (IOException e) {
-				throw new RuntimeException(e.getMessage(), e);
-			}
-			catch (TemplateException e) {
-				throw new RuntimeException(e.getMessage(), e);
-			}
+		public String getHtdocsPath() {
+			return folder;
 		}
 
 	}
-
 }
