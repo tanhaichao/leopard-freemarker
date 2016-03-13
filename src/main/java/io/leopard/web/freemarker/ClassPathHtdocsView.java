@@ -17,6 +17,9 @@ import org.springframework.web.servlet.View;
 import io.leopard.web.freemarker.htdocs.ClassPathHtdocs;
 
 public class ClassPathHtdocsView extends ModelAndView {
+	public ClassPathHtdocsView() {
+		super(createView(""));
+	}
 
 	public ClassPathHtdocsView(String folder) {
 		super(createView(folder));
@@ -35,7 +38,7 @@ public class ClassPathHtdocsView extends ModelAndView {
 
 		@Override
 		public InputStream readFile(HttpServletRequest request, String filename) throws IOException {
-			String path = "/" + this.getHtdocsPath() + filename;
+			String path = "/htdocs" + this.getHtdocsPath() + filename;
 			Resource resource = resourceLoader.getResource(path);
 			if (resource == null || !resource.exists()) {
 				throw new FileNotFoundException(path);
