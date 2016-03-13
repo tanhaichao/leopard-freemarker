@@ -54,4 +54,10 @@ public abstract class AbstractFileServlet extends HttpServlet implements IHtdocs
 	public InputStream readFile(HttpServletRequest request, String filename) throws IOException {
 		return htdocs.readFile(request, filename);
 	}
+
+	@Override
+	public byte[] toBytes(InputStream input) throws IOException {
+		return htdocs.toBytes(input);
+	}
+
 }

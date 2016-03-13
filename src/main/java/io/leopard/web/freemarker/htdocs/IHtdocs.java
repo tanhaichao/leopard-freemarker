@@ -17,4 +17,6 @@ public interface IHtdocs {
 
 	InputStream readFile(HttpServletRequest request, String filename) throws IOException;
 
+	byte[] toBytes(InputStream input) throws IOException;
+
 }

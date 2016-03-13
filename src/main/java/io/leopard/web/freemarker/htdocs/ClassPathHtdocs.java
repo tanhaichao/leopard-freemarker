@@ -81,7 +81,8 @@ public abstract class ClassPathHtdocs implements IHtdocs {
 		}
 	}
 
-	protected byte[] toBytes(InputStream input) throws IOException {
+	@Override
+	public byte[] toBytes(InputStream input) throws IOException {
 		byte[] buffer = new byte[1024];
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		int n = 0;
