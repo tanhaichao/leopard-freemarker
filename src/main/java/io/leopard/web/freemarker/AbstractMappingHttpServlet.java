@@ -13,6 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.util.StringUtils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+
 import io.leopard.autounit.CtClassUtil;
 import io.leopard.json.Json;
 import io.leopard.web.freemarker.js.NgController;
@@ -22,6 +27,12 @@ import io.leopard.web.freemarker.xparam.XparamParserImpl;
 public abstract class AbstractMappingHttpServlet extends AbstractHttpServlet {
 
 	private static final long serialVersionUID = 1L;
+
+	private static ObjectWriter formatWriter;
+
+	static {
+		formatWriter = new ObjectMapper().setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES).writer().withDefaultPrettyPrinter();
+	}
 
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -83,7 +94,7 @@ public abstract class AbstractMappingHttpServlet extends AbstractHttpServlet {
 		NgController anno = method.getAnnotation(NgController.class);
 		if (anno != null) {
 			String javascript = this.doNgController(method, args);
-			System.out.println("ng javascript:" + javascript);
+			// System.out.println("ng javascript:" + javascript);
 			return javascript;
 		}
 
@@ -104,8 +115,16 @@ public abstract class AbstractMappingHttpServlet extends AbstractHttpServlet {
 			map.put("status", e.getClass().getSimpleName());
 			map.put("data", e.getMessage());
 		}
-		String json = Json.toFormatJson(map);
-		return json;
+		// String json = Json.toFormatJson(map);
+
+		// return json;
+		try {
+			return formatWriter.writeValueAsString(map);
+		}
+		catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
 	}
 
 	protected String doNgController(Method method, Object[] args) {
