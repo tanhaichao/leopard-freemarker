@@ -18,7 +18,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
-import io.leopard.autounit.CtClassUtil;
 import io.leopard.json.Json;
 import io.leopard.web.freemarker.js.NgController;
 import io.leopard.web.freemarker.xparam.XparamParser;
