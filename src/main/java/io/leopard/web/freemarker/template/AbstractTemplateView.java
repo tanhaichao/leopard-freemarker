@@ -92,6 +92,8 @@ public abstract class AbstractTemplateView {
 		catch (TemplateException e) {
 			throw new IOException(e);
 		}
+
+		output(writer, response);
 		// Template tmp = (getEncoding() != null ? conf.getTemplate(name,
 		// locale, getEncoding()) : conf.getTemplate(name, locale));
 
