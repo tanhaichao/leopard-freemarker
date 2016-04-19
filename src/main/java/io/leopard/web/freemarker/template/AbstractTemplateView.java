@@ -84,11 +84,6 @@ public abstract class AbstractTemplateView {
 		template.setCustomAttribute("request", request);
 		model.put("request", request);
 
-		// Template tmp = (getEncoding() != null ? conf.getTemplate(name,
-		// locale, getEncoding()) : conf.getTemplate(name, locale));
-
-		response.setContentType("text/html; charset=UTF-8");
-
 		StringWriter writer = new StringWriter();
 		// Writer out = response.getWriter();
 		try {
@@ -97,9 +92,16 @@ public abstract class AbstractTemplateView {
 		catch (TemplateException e) {
 			throw new IOException(e);
 		}
+		// Template tmp = (getEncoding() != null ? conf.getTemplate(name,
+		// locale, getEncoding()) : conf.getTemplate(name, locale));
+
+	}
+
+	protected void output(StringWriter writer, HttpServletResponse response) throws IOException {
 		String html = writer.toString();
 		html = html.replace("# {{", "#{{");// 兼容AngularJS
 
+		response.setContentType("text/html; charset=UTF-8");
 		Writer out = response.getWriter();
 		out.write(html);
 		out.flush();
