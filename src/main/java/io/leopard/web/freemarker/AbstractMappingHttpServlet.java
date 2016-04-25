@@ -104,7 +104,7 @@ public abstract class AbstractMappingHttpServlet extends AbstractHttpServlet {
 			map.put("data", data);
 		}
 		catch (InvocationTargetException t) {
-			Exception e = (Exception) t.getCause();
+			Throwable e = (Throwable) t.getCause();
 			e.printStackTrace();
 			map.put("status", e.getClass().getSimpleName());
 			map.put("data", e.getMessage());
