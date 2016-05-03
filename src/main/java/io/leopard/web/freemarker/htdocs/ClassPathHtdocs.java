@@ -59,6 +59,9 @@ public abstract class ClassPathHtdocs extends HttpServlet implements IHtdocs {
 
 	protected InputStream getRealAsInputStream(HttpServletRequest request, String filename) {
 		String path = request.getServletContext().getRealPath(filename);
+		if (path == null) {
+			return null;
+		}
 		File file = new File(path);
 		if (!file.exists()) {
 			return null;
