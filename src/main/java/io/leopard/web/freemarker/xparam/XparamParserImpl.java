@@ -10,6 +10,7 @@ public class XparamParserImpl implements XparamParser {
 
 	static {
 		list.add(new XparamParserPageImpl());
+		list.add(new XparamParserServerNameImpl());
 	}
 
 	@Override
