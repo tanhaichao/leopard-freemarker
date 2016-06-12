@@ -98,7 +98,7 @@ public abstract class ClassPathHtdocs extends HttpServlet implements IHtdocs {
 		return output.toByteArray();
 	}
 
-	private static Pattern FILENAME_PATTERN = Pattern.compile("^[a-zA-Z0-9\\-_/\\.]+\\.(css|jpg|png|js|eot|html|json|woff|woff2|ttf|svg|md)$");
+	private static Pattern FILENAME_PATTERN = Pattern.compile("^[a-zA-Z0-9\\-_/\\.]+\\.(css|jpg|png|js|eot|html|json|woff|woff2|ttf|svg|md|ico)$");
 
 	/**
 	 * 文件名称合法性判断.
