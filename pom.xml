@@ -13,6 +13,9 @@
 	</parent>
 
 
+	<properties>
+		<leopard.unified.version>${project.version}</leopard.unified.version>
+	</properties>
 
 	<scm>
 		<url>https://github.com/tanhaichao/leopard-freemarker</url>
@@ -53,7 +56,7 @@
 		<dependency>
 			<groupId>io.leopard</groupId>
 			<artifactId>leopard-json</artifactId>
-			<version>0.0.4-SNAPSHOT</version>
+			<version>${leopard.unified.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
