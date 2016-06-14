@@ -32,6 +32,8 @@ public class ClassPathHtdocsView extends ModelAndView {
 
 	public static class HtdocsView extends ClassPathHtdocs implements View {
 
+		private static final long serialVersionUID = 1L;
+
 		private String folder;
 
 		private ResourceLoader resourceLoader = new DefaultResourceLoader();
@@ -39,6 +41,7 @@ public class ClassPathHtdocsView extends ModelAndView {
 		@Override
 		public InputStream readFile(HttpServletRequest request, String filename) throws IOException {
 			String path = "/htdocs" + this.getHtdocsPath() + filename;
+			System.out.println("path:" + path);
 			Resource resource = resourceLoader.getResource(path);
 			if (resource == null || !resource.exists()) {
 				throw new FileNotFoundException(path);
@@ -58,6 +61,7 @@ public class ClassPathHtdocsView extends ModelAndView {
 		@Override
 		public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 			String filename = request.getRequestURI();
+			System.out.println("render filename:" + filename);
 			this.doFile(request, response, filename);
 		}
 
