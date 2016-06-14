@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.leopard</groupId>
 	<artifactId>leopard-freemarker</artifactId>
-	<version>0.9.3</version>
+	<version>0.9.4-SNAPSHOT</version>
 	<name>Leopard-Freemarker</name>
 	<description>规范、简化Freemarker，自带常用自定义Freemarker指令、方法。</description>
 
@@ -18,9 +18,9 @@
 	</properties>
 
 	<scm>
-		<url>https://github.com/tanhaichao/leopard-freemarker/tags/leopard-freemarker-0.9.3</url>
-		<connection>scm:svn:https://github.com/tanhaichao/leopard-freemarker/tags/leopard-freemarker-0.9.3</connection>
-		<developerConnection>scm:svn:https://github.com/tanhaichao/leopard-freemarker/tags/leopard-freemarker-0.9.3</developerConnection>
+		<url>https://github.com/tanhaichao/leopard-freemarker</url>
+		<connection>scm:svn:https://github.com/tanhaichao/leopard-freemarker/trunk</connection>
+		<developerConnection>scm:svn:https://github.com/tanhaichao/leopard-freemarker/trunk</developerConnection>
 	</scm>
 
 	<dependencies>
